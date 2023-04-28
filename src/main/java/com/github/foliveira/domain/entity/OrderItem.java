@@ -1,11 +1,26 @@
 package com.github.foliveira.domain.entity;
 
-public class OrderProduct {
+import jakarta.persistence.*;
 
+@Entity
+@Table(name = "order_item")
+public class OrderItem {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "entity_id")
     private Integer id;
+
+    @ManyToOne
+    @JoinColumn(name = "order_id")
     private Order order;
+
+    @ManyToOne
+    @JoinColumn(name = "item_id")
     private Product product;
-    private Integer amount;
+
+    @Column(name = "item_quantity")
+    private Integer itemQuantity;
 
     public Integer getId() {
         return id;
@@ -32,10 +47,10 @@ public class OrderProduct {
     }
 
     public Integer getAmount() {
-        return amount;
+        return itemQuantity;
     }
 
-    public void setAmount(Integer amount) {
-        this.amount = amount;
+    public void setAmount(Integer itemQuantity) {
+        this.itemQuantity = itemQuantity;
     }
 }

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "order")
@@ -23,6 +24,9 @@ public class Order {
 
     @Column(name = "order_total", length = 20, precision = 2)
     private BigDecimal orderTotal;
+
+    @OneToMany(mappedBy = "order")
+    private List<OrderItem> items;
 
     public Integer getId() {
         return id;
@@ -54,5 +58,13 @@ public class Order {
 
     public void setOrderTotal(BigDecimal orderTotal) {
         this.orderTotal = orderTotal;
+    }
+
+    public List<OrderItem> getItems() {
+        return items;
+    }
+
+    public void setItems(List<OrderItem> items) {
+        this.items = items; 
     }
 }
