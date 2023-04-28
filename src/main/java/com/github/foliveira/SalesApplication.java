@@ -20,27 +20,27 @@ public class SalesApplication {
             clientRepository.save(new Client("Dougllas"));
             clientRepository.save(new Client("Outro Cliente"));
 
-            List<Client> todosClientes = clientRepository.getAll();
+            List<Client> todosClientes = clientRepository.findAll();
             todosClientes.forEach(System.out::println);
 
             System.out.println("Atualizando clientes");
             todosClientes.forEach(c -> {
                 c.setName(c.getName() + " atualizado.");
-                clientRepository.update(c);
+                clientRepository.save(c);
             });
 
-            todosClientes = clientRepository.getAll();
+            todosClientes = clientRepository.findAll();
             todosClientes.forEach(System.out::println);
 
             System.out.println("Buscando clientes");
-            clientRepository.searchByName("Cli").forEach(System.out::println);
+            clientRepository.findByNameLike("Cli").forEach(System.out::println);
 
-//            System.out.println("deletando clientes");
-//            clientes.obterTodos().forEach(c -> {
-//                clientes.deletar(c);
-//            });
+            System.out.println("deletando clientes");
+            clientRepository.findAll().forEach(c -> {
+                clientRepository.delete(c);
+            });
 
-            todosClientes = clientRepository.getAll();
+            todosClientes = clientRepository.findAll();
             if(todosClientes.isEmpty()){
                 System.out.println("Nenhum cliente encontrado.");
             }else{
