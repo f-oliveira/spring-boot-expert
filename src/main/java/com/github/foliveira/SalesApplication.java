@@ -7,6 +7,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -20,32 +21,9 @@ public class SalesApplication {
             clientRepository.save(new Client("Dougllas"));
             clientRepository.save(new Client("Outro Cliente"));
 
-            List<Client> todosClientes = clientRepository.findAll();
-            todosClientes.forEach(System.out::println);
+            List<Client> result = clientRepository.encontrarNome("Dougllas");
+            result.forEach(System.out::println);
 
-            System.out.println("Atualizando clientes");
-            todosClientes.forEach(c -> {
-                c.setName(c.getName() + " atualizado.");
-                clientRepository.save(c);
-            });
-
-            todosClientes = clientRepository.findAll();
-            todosClientes.forEach(System.out::println);
-
-            System.out.println("Buscando clientes");
-            clientRepository.findByNameLike("Cli").forEach(System.out::println);
-
-            System.out.println("deletando clientes");
-            clientRepository.findAll().forEach(c -> {
-                clientRepository.delete(c);
-            });
-
-            todosClientes = clientRepository.findAll();
-            if(todosClientes.isEmpty()){
-                System.out.println("Nenhum cliente encontrado.");
-            }else{
-                todosClientes.forEach(System.out::println);
-            }
         };
     }
 
