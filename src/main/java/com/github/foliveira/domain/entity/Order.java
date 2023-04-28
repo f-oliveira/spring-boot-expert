@@ -1,13 +1,27 @@
 package com.github.foliveira.domain.entity;
 
+import jakarta.persistence.*;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+@Entity
+@Table(name = "order")
 public class Order {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "entity_id")
     private Integer id;
+
+    @ManyToOne
+    @JoinColumn(name = "client_id")
     private Client client;
+
+    @Column(name = "order_date")
     private LocalDate orderDate;
+
+    @Column(name = "order_total", length = 20, precision = 2)
     private BigDecimal orderTotal;
 
     public Integer getId() {

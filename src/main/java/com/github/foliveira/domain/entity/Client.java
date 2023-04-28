@@ -3,16 +3,23 @@ package com.github.foliveira.domain.entity;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+import java.util.Set;
+
 @Entity
 @Table(name = "client")
 public class Client {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
+    @Column(name = "entity_id")
     private Integer id;
+
     @Column(name ="name", length = 100)
     private String name;
+
+    @OneToMany(mappedBy = "client")
+    private Set<Order> orders;
 
     public Client() {
     }
@@ -40,6 +47,14 @@ public class Client {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Set<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(Set<Order> orders) {
+        this.orders = orders;
     }
 
     @Override
