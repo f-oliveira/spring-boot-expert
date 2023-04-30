@@ -3,7 +3,6 @@ package com.github.foliveira.domain.entity;
 
 import jakarta.persistence.*;
 
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -12,13 +11,13 @@ public class Client {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "entity_id")
+    @Column(name = "id")
     private Integer id;
 
     @Column(name ="name", length = 100)
     private String name;
 
-    @OneToMany(mappedBy = "client")
+    @OneToMany(mappedBy = "client", fetch = FetchType.LAZY)
     private Set<Order> orders;
 
     public Client() {

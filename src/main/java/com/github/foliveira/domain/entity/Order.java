@@ -12,7 +12,7 @@ public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "entity_id")
+    @Column(name = "id")
     private Integer id;
 
     @ManyToOne
@@ -22,7 +22,7 @@ public class Order {
     @Column(name = "order_date")
     private LocalDate orderDate;
 
-    @Column(name = "order_total", length = 20, precision = 2)
+    @Column(name = "order_total", precision = 20, scale = 2)
     private BigDecimal orderTotal;
 
     @OneToMany(mappedBy = "order")
@@ -65,6 +65,15 @@ public class Order {
     }
 
     public void setItems(List<OrderItem> items) {
-        this.items = items; 
+        this.items = items;
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", orderDate=" + orderDate +
+                ", orderTotal=" + orderTotal +
+                '}';
     }
 }

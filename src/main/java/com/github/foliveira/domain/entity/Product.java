@@ -10,7 +10,7 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "entity_id")
+    @Column(name = "id")
     private Integer id;
 
     @Column(name = "description")
