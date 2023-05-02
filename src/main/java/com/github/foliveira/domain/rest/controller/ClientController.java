@@ -17,7 +17,7 @@ public class ClientController {
         this.clientRepository = clientRepository;
     }
 
-    @GetMapping("api/clients/{id}")
+    @GetMapping("/api/clients/{id}")
     @ResponseBody
     public ResponseEntity getClientById(@PathVariable Integer id){
         Optional<Client> client =  clientRepository.findById(id);
@@ -26,6 +26,13 @@ public class ClientController {
             return ResponseEntity.ok(client.get());
         }
         return ResponseEntity.notFound().build();
+    }
+
+    @PostMapping("/api/clients")
+    @ResponseBody
+    public ResponseEntity save(@RequestBody Client client) {
+        Client clientSaved = clientRepository.save(client);
+        return ResponseEntity.ok(clientSaved);
     }
 
 }
