@@ -25,6 +25,7 @@ public class ClientController {
         if (client.isPresent()) {
             return ResponseEntity.ok(client.get());
         }
+
         return ResponseEntity.notFound().build();
     }
 
@@ -32,7 +33,21 @@ public class ClientController {
     @ResponseBody
     public ResponseEntity save(@RequestBody Client client) {
         Client clientSaved = clientRepository.save(client);
+
         return ResponseEntity.ok(clientSaved);
+    }
+
+    @DeleteMapping("/api/clients/{id}")
+    @ResponseBody
+    public ResponseEntity delete(@PathVariable Integer id) {
+        Optional<Client> client = clientRepository.findById(id);
+
+        if (client.isPresent()) {
+            clientRepository.delete(client.get());
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.notFound().build();
     }
 
 }
