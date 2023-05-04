@@ -1,18 +1,38 @@
 package com.github.foliveira.domain.rest.controller;
 
+import com.github.foliveira.domain.entity.Client;
+import com.github.foliveira.domain.repository.ClientRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @Controller
 public class ClientController {
 
-    @RequestMapping(value = "/api/client/hello/{nome}", method = RequestMethod.GET)
+    private ClientRepository clientRepository;
+
+    public ClientController(ClientRepository clientRepository) {
+        this.clientRepository = clientRepository;
+    }
+
+    @GetMapping("/api/clients/{id}")
     @ResponseBody
-    public String helloCliente( @PathVariable("nome") String nomeCliente ){
-        return String.format("Hello %s ", nomeCliente);
+    public ResponseEntity getClientById(@PathVariable Integer id){
+        Optional<Client> client =  clientRepository.findById(id);
+
+        if (client.isPresent()) {
+            return ResponseEntity.ok(client.get());
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @PostMapping("/api/clients")
+    @ResponseBody
+    public ResponseEntity save(@RequestBody Client client) {
+        Client clientSaved = clientRepository.save(client);
+        return ResponseEntity.ok(clientSaved);
     }
 
 }

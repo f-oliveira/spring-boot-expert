@@ -1,6 +1,6 @@
 package com.github.foliveira.domain.entity;
 
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.Set;
@@ -17,6 +17,7 @@ public class Client {
     @Column(name ="name", length = 100)
     private String name;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "client", fetch = FetchType.LAZY)
     private Set<Order> orders;
 
